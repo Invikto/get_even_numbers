@@ -1,41 +1,43 @@
 package arthur.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class ArrayFilter {
 
-  private final int[] arr;
+  private final int[] array;
 
-  public ArrayFilter(int[] arr) {
-    this.arr = arr;
+  public ArrayFilter(int[] array) {
+    this.array = array;
   }
 
-  public void getEvenNumbers(String mode) {
-    System.out.println("\nEven numbers of the array are:");
-
+  public ArrayList<Integer> getEvenNumbersBy(String mode) {
+    ArrayList<Integer> arrayOfEvenNumbers = new ArrayList<>();
     switch (mode) {
       case "for":
-        for (int i = 0; i < 100; i++) {
-          if (arr[i] % 2 == 0) {
-            System.out.println(arr[i]);
+        for (int i = 0; i < array.length; i++) {
+          if (array[i] % 2 == 0) {
+            arrayOfEvenNumbers.add(array[i]);
           }
         }
         break;
       case "forEach":
-        for (int i : arr) {
+        for (int i : array) {
           if (i % 2 == 0) {
-            System.out.println(i);
+            arrayOfEvenNumbers.add(i);
           }
         }
         break;
       case "stream":
-        IntStream stream = Arrays.stream(arr);
-        stream.filter(i -> i % 2 == 0).forEachOrdered(System.out::println);
+        IntStream stream = Arrays.stream(array);
+        stream.filter(i -> i % 2 == 0).forEachOrdered(arrayOfEvenNumbers::add);
         break;
       default:
-        throw new IllegalStateException(String.format("Unexpected value: %s", mode));
+        throw new IllegalStateException(String.format("Unexpected value: %s.", mode));
     }
+
+    return arrayOfEvenNumbers;
   }
 
 }

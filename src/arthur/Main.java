@@ -1,5 +1,6 @@
 package arthur;
 
+import arthur.utils.ArrayCreator;
 import arthur.utils.ArrayFilter;
 
 import java.util.Arrays;
@@ -8,18 +9,29 @@ import java.util.Scanner;
 public class Main {
 
   public static void main(String[] args) {
-    int[] input_arr = new int[100];
-    for (int i = 0; i < 100; i++) {
-      input_arr[i] = i + 1;
-    }
-
-    System.out.printf("An input array is:\n%s\n", Arrays.toString(input_arr));
-
-    System.out.println("\nPlease, choose a filter mode:");
+    System.out.println("Please, enter an array length:");
     Scanner console = new Scanner(System.in);
-    String mode = console.nextLine();
+    while (!console.hasNextInt()) {
+      System.out.println("Please, enter an integer.");
+      console = new Scanner(System.in);
+    }
+    int arrayLength = console.nextInt();
 
-    ArrayFilter arrayFilter = new ArrayFilter(input_arr);
-    arrayFilter.getEvenNumbers(mode);
+    ArrayCreator arrayCreator = new ArrayCreator();
+    int[] array = arrayCreator.getSequenceOfNumbersFromOneTo(arrayLength);
+    System.out.printf("\nAn input array is:\n%s\n", Arrays.toString(array));
+
+    while (true) {
+      System.out.println("\nPlease, choose a filter mode ('for', 'forEach' or 'stream'):");
+      console = new Scanner(System.in);
+      String mode = console.nextLine();
+      ArrayFilter arrayFilter = new ArrayFilter(array);
+      try {
+        System.out.printf("\nEven numbers of the array are:\n%s\n", arrayFilter.getEvenNumbersBy(mode).toString());
+        break;
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
